@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { animated, useSpring } from "react-spring";
+import { faker } from "@faker-js/faker";
+import clsx from "clsx";
 
 function App() {
+  const isConnected = false;
   return (
     <div
       className="min-h-screen w-full select-none bg-gray-700 "
       draggable={false}
     >
       <div className="flex h-screen w-full justify-between">
-        <div className="h-full w-full sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/5">
+        <div className="relative h-full w-full sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/5">
           <LeftPane />
+          <div
+            className={clsx(
+              "absolute bottom-2 right-2 rounded-lg px-2 py-2 leading-none text-white",
+              isConnected ? "bg-green-500" : "bg-red-500"
+            )}
+          >
+            {isConnected ? "Connected" : "Connecting"}
+            {!isConnected && (
+              <span className="ml-4 h-1 w-1 animate-ping rounded-full bg-green-500" />
+            )}
+          </div>
         </div>
         <div className="hidden h-full bg-gray-500 sm:block sm:w-1/2 md:w-1/2 lg:w-3/5 xl:w-4/5"></div>
       </div>
@@ -40,29 +53,13 @@ const LeftPane = () => {
     btn.appendChild(circle);
   }
 
-  const peoples = [
-    {
-      name: "Majid Zahedi",
-      lastSeen: "Fri",
-      msg: "How You Doin?",
-      isOnline: true,
-    },
-    { name: "Ali Maski", lastSeen: "Mon", msg: "This is holesome!" },
-    {
-      name: "Mehdi Kermani",
-      lastSeen: "8/29/22",
-      msg: "i've been thinking about that whole day",
-    },
-    { name: "Ehsan Mahmoodian", lastSeen: "Sun", msg: "my name is Ehsan " },
-    {
-      name: "Hossain Hasan Zadeh",
-      lastSeen: "Sat",
-      msg: "please forgive me man",
-    },
-    { name: "Aref Mirza Ahmadi", lastSeen: "1:42 Pm", msg: "i Love you body" },
-    { name: "Mehdi Farokhi", lastSeen: "9/4/22", msg: "go to hell" },
-    { name: "Maryam Porghazi ", lastSeen: "Thu", msg: "End my pain" },
-  ];
+  const peoples = Array.from(Array(8).keys()).map((index) => ({
+    name: faker.name.fullName({ gender: "male" }),
+    lastSeen: faker.date.weekday({ abbr: true }),
+    msg: faker.lorem.lines(),
+    isOnline: Math.random() < 0.5,
+  }));
+
   return (
     <div className="grid grid-cols-1 gap-y-1 px-2 pt-4">
       <div className="flex items-center justify-around py-1 pb-4">
