@@ -3,6 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply h-2 w-1;
+    /* width: 20px; */
+    /* height: 20px; */
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-700;
+    /* border-radius: 100vh; */
+    /* background: #f7f4ed; */
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full border-white bg-gray-900/50 hover:bg-gray-100;
+  }
+
+  /* .scrollbar::-webkit-scrollbar-thumb:hover { */
+  /*   @apply bg-gray-100; */
+  /* } */
+}
+
 span.ripple {
   position: absolute;
   border-radius: 50%;
