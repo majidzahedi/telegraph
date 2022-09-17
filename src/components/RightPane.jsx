@@ -6,8 +6,12 @@ import {
   FaMicrophone,
   FaPaperPlane,
 } from "react-icons/fa";
+import { useLoaderData, useOutletContext } from "react-router-dom";
 
-const RightPane = ({ messages, sendMessage, isTypeing, someOneTyping }) => {
+const RightPane = () => {
+  const { messages, sendMessage, isTypeing, someOneTyping } =
+    useOutletContext();
+  const { roomInfo } = useLoaderData();
   const [message, setMessage] = useState("");
   const [typing, setTyping] = useState(false);
 
@@ -38,7 +42,18 @@ const RightPane = ({ messages, sendMessage, isTypeing, someOneTyping }) => {
 
   return (
     <>
-      <div className="absolute top-0 h-[calc(100%-48px)] w-full ">
+      <div className="absolute top-0 h-[calc(100%-96px)] w-full ">
+        <div className="to-0 absolute flex h-14 w-full  items-center space-x-4 bg-gray-700 px-2">
+          <img
+            draggable={false}
+            src={`avatars/${roomInfo.name}.svg`}
+            alt=""
+            className={`h-10 w-10 rounded-full ring ${
+              true ? "ring-green-500" : "ring-gray-500"
+            }`}
+          />
+          <p className="text-lg text-base-100">{roomInfo.name}</p>
+        </div>
         <div className="absolute bottom-2 grid w-full  grid-cols-1 justify-end space-y-2 px-4 py-2">
           {messages.map((msg, index) => (
             <div
